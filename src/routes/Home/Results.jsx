@@ -1,5 +1,11 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
+
+const buildProfileUrl = ({ category, name, nation, year }) =>
+  `/profile?nation=${encodeURIComponent(nation)}&year=${encodeURIComponent(
+    year
+  )}&category=${encodeURIComponent(category)}&name=${encodeURIComponent(name)}`;
 
 const columns = [
   {
@@ -28,9 +34,8 @@ const columns = [
     flex: true,
     getActions: (params) => [
       <Button
-        onClick={() => {
-          console.log(params);
-        }}
+        component={Link}
+        to={buildProfileUrl(params.row)}
         variant="outlined"
         disableElevation
         color="info"
@@ -42,16 +47,16 @@ const columns = [
   },
 ];
 
-const pageSizeOptions = [10, 50, 100];
+const pageSizeOptions = [5, 10, 50, 100];
 
 const initialState = {
-  pagination: { paginationModel: { pageSize: 10 } },
+  pagination: { paginationModel: { pageSize: 5 } },
 };
 
 const slots = {
   noRowsOverlay: () => (
     <Typography variant="body1" textAlign="center" mt="7%">
-      There are no winners matching the search criterion
+      No winners matching the search criterion
     </Typography>
   ),
 };

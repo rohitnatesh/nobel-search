@@ -23,7 +23,16 @@ const getSearchApi = ({ nation, year, category }) => {
   return api;
 };
 
-export const HomePage = () => {
+const parseResponse = (responseData) =>
+  responseData.map(({ winnerName, year, prizeType, nation }, index) => ({
+    id: index,
+    name: winnerName?.value || null,
+    year: year?.value || null,
+    category: prizeType?.value?.split('#')?.pop().replace('Prize', '') || null,
+    nation: nation?.value?.split('/')?.pop().replace(/_/g, ' ') || null,
+  }));
+
+export const Home = () => {
   const [winners, setWinners] = useState([]);
   const [searched, setSearched] = useState(false);
 
@@ -31,6 +40,7 @@ export const HomePage = () => {
     // TODO: Add backdrop.
     try {
       if (!formData.nation && !formData.year && !formData.category) {
+        setSearched(false);
         return;
       }
 
@@ -39,33 +49,19 @@ export const HomePage = () => {
       const responseData = await fetch(api);
       const data = await responseData.json();
 
-      setWinners(
-        data.results.bindings ?? [
-          {
-            name: 'Rohit Natesh',
-            nation: 'India',
-            category: 'Literature',
-            year: '2023',
-          },
-        ]
-      );
+      const newWinners = parseResponse(data?.results?.bindings ?? []);
+
+      setWinners(newWinners);
       setSearched(true);
     } catch (error) {
-      setWinners([
-        {
-          id: 0,
-          name: 'Rohit Natesh',
-          nation: 'India',
-          category: 'Literature',
-          year: '2023',
-        },
-      ]);
+      setWinners([]);
       setSearched(true);
     }
   }, []);
 
   const handleClear = () => {
-    setWinners(null);
+    setWinners([]);
+    setSearched(false);
   };
 
   return (

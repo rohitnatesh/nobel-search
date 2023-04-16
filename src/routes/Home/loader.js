@@ -1,4 +1,4 @@
-export const homePageLoader = async () => {
+export const homeLoader = async () => {
   const nationsResponse = fetch('/nobel/nations');
   const categoriesResponse = fetch('/nobel/categories');
   const yearsResponse = fetch('/nobel/years');

@@ -1,15 +1,25 @@
-import { HomePage } from './HomePage';
-import { homePageLoader } from './HomePage/loader';
+import { Home } from './Home';
+import { homeLoader } from './Home/loader';
+import { PageNotFound } from './PageNotFound';
+import { Error } from './Error';
+import { Profile } from './Profile';
+import { profileLoader } from './Profile/loader';
 
 export const routes = [
   {
     path: '/',
-    element: <HomePage />,
-    loader: homePageLoader,
-    errorElement: 'Something went wrong!',
+    element: <Home />,
+    loader: homeLoader,
+    errorElement: <Error />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+    loader: profileLoader,
+    errorElement: <Error />,
   },
   {
     path: '*',
-    element: 'Page not found!',
+    element: <PageNotFound />,
   },
 ];
