@@ -6,6 +6,7 @@ export const routes = [
     path: '/',
     element: <HomePage />,
     loader: homePageLoader,
+    errorElement: 'Something went wrong!',
   },
   {
     path: '*',
