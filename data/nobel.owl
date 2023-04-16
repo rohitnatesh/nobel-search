@@ -1,0 +1,166 @@
+<rdf:RDF 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xml:base="http://swat.cse.lehigh.edu/resources/onto/nobel.owl">
+
+<owl:Ontology rdf:about=""/>
+
+<owl:Class rdf:ID="Prize">
+<owl:disjointWith rdf:resource="#Organization"/>
+<owl:disjointWith rdf:resource="#NobelWinner"/>
+<owl:disjointWith rdf:resource="#OrganizationWinner"/>
+</owl:Class>
+
+<owl:Class rdf:ID="PhysicsPrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PeacePrize"/>
+<owl:disjointWith rdf:resource="#LiteraturePrize"/>
+<owl:disjointWith rdf:resource="#ChemistryPrize"/>
+<owl:disjointWith rdf:resource="#MedicinePrize"/>
+<owl:disjointWith rdf:resource="#EconomicsPrize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="PeacePrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#LiteraturePrize"/>
+<owl:disjointWith rdf:resource="#PhysicsPrize"/>
+<owl:disjointWith rdf:resource="#ChemistryPrize"/>
+<owl:disjointWith rdf:resource="#MedicinePrize"/>
+<owl:disjointWith rdf:resource="#EconomicsPrize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="EconomicsPrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PeacePrize"/>
+<owl:disjointWith rdf:resource="#LiteraturePrize"/>
+<owl:disjointWith rdf:resource="#PhysicsPrize"/>
+<owl:disjointWith rdf:resource="#ChemistryPrize"/>
+<owl:disjointWith rdf:resource="#MedicinePrize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="LiteraturePrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PeacePrize"/>
+<owl:disjointWith rdf:resource="#PhysicsPrize"/>
+<owl:disjointWith rdf:resource="#ChemistryPrize"/>
+<owl:disjointWith rdf:resource="#MedicinePrize"/>
+<owl:disjointWith rdf:resource="#EconomicsPrize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="ChemistryPrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PeacePrize"/>
+<owl:disjointWith rdf:resource="#LiteraturePrize"/>
+<owl:disjointWith rdf:resource="#PhysicsPrize"/>
+<owl:disjointWith rdf:resource="#MedicinePrize"/>
+<owl:disjointWith rdf:resource="#EconomicsPrize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="MedicinePrize">
+<rdfs:subClassOf rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PeacePrize"/>
+<owl:disjointWith rdf:resource="#LiteraturePrize"/>
+<owl:disjointWith rdf:resource="#PhysicsPrize"/>
+<owl:disjointWith rdf:resource="#ChemistryPrize"/>
+<owl:disjointWith rdf:resource="#EconomicsPrize"/>
+</owl:Class>
+
+
+
+
+<owl:Class rdf:ID="NobelWinner">
+<owl:disjointWith rdf:resource="#Prize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="Organization">
+<owl:disjointWith rdf:resource="#Prize"/>
+</owl:Class>
+
+<owl:Class rdf:ID="OrganizationWinner">
+<rdfs:subClassOf rdf:resource="#Organization"/>
+<owl:disjointWith rdf:resource="#Prize"/>
+<owl:disjointWith rdf:resource="#PersonWinner"/>
+</owl:Class>
+
+<owl:Class rdf:ID="PersonWinner">
+<rdfs:subClassOf rdf:resource="#NobelWinner"/>
+<owl:disjointWith rdf:resource="#OrganizationWinner"/>
+</owl:Class>
+
+
+
+<owl:ObjectProperty rdf:ID="Association">
+<rdfs:domain rdf:resource="#PersonWinner"/>
+<rdfs:range rdf:resource="#Organization"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+The laureate was associated with an organization when they won the prize.
+</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:ID="birthYear">
+<rdfs:domain rdf:resource="#PersonWinner"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Person laureates were born at some point.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="deathYear">
+<rdfs:domain rdf:resource="#PersonWinner"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Some laureates have died.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="logo">
+<rdfs:domain rdf:resource="#Organization"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Organizations have logos instead of photos.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="motivation">
+<rdfs:domain rdf:resource="#Prize"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="name">
+<rdfs:domain rdf:resource="#NobelWinner"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">All laureates have a name.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="nationality">
+<rdfs:domain rdf:resource="#PersonWinner"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+Person laureates were associated with a nation when they won the prize.
+</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="photo">
+<rdfs:domain rdf:resource="#PersonWinner"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A picture of the laureate.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:ObjectProperty rdf:ID="PrizeWinner">
+<rdfs:domain rdf:resource="#Prize"/>
+<rdfs:range rdf:resource="#NobelWinner"/>
+<owl:inverseOf rdf:resource="#WonPrize"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:ID="WonPrize">
+<rdfs:domain rdf:resource="#NobelWinner"/>
+<rdfs:range rdf:resource="#Prize"/>
+<owl:inverseOf rdf:resource="#PrizeWinner"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Something or someone won a prize.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:ID="yearFounded">
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="yearWon">
+<rdfs:domain rdf:resource="#Prize"/>
+<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A prize was awarded in a specific year.</rdfs:comment>
+</owl:DatatypeProperty>
+</rdf:RDF>
