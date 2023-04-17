@@ -12,7 +12,6 @@ graph = rdflib.Graph()
 graph.parse("./data/nobel.owl", format="xml")
 graph.parse("./data/nobeldata.owl", format="xml")
 
-
 def run_sparql_query(query):
     results = graph.query(query)
     serialized_results = results.serialize(format="json")
@@ -294,10 +293,16 @@ WHERE {{
   ?winner nob:name ?winnerName .
   ?winner nob:WonPrize ?prize .
   ?winner nob:nationality ?nation .
+  ?winner nob:photo ?photo .
+  ?winner nob:birthYear ?birthYear .
+  ?winner nob:deathYear ?deathYear .
   ?prize rdf:type ?prizeClass .
   ?prizeClass rdfs:subClassOf nob:Prize .
   ?prize nob:yearWon ?year .
-  FILTER (?year = "{year}"^^xsd:int) .
+  ?prize nob:motivation ?motivation .
+  ?winner nob:Association ?association .
+  
+  FILTER (xsd:integer(?year) = {year}) .
   BIND (STR(?prizeClass) AS ?prizeType) .
   FILTER (CONTAINS(?winnerName, "{person_name}")) .
 }}
