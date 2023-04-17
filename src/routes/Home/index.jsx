@@ -8,16 +8,16 @@ import { Results } from './Results';
 const getSearchApi = ({ nation, year, category }) => {
   let api = '/nobel';
 
-  if (nation) {
-    api += `/nation/${nation}`;
-  }
-
   if (year) {
     api += `/year/${year}`;
   }
 
   if (category) {
     api += `/category/${category}`;
+  }
+  
+  if (nation) {
+    api += `/nation/${nation}`;
   }
 
   return api;
