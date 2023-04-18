@@ -32,19 +32,32 @@ const Selector = ({ id, label, data, ...otherProps }) => {
 export const SearchForm = ({ onSearch, onClear }) => {
   const { nations, categories, years } = useLoaderData();
 
-  const [formData, setFormData] = useState({
-    nation: '',
-    year: '',
-    category: '',
+  const [formData, setFormData] = useState(() => {
+    const localFormData = localStorage.getItem('formData');
+
+    if (localFormData) {
+      return JSON.parse(localFormData);
+    }
+
+    return {
+      nation: '',
+      year: '',
+      category: '',
+    };
   });
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => {
+      const newFromData = {
+        ...prev,
+        [name]: value,
+      };
+
+      localStorage.setItem('formData', JSON.stringify(newFromData));
+      return newFromData;
+    });
   }, []);
 
   const handleSubmit = () => {
@@ -57,6 +70,7 @@ export const SearchForm = ({ onSearch, onClear }) => {
       year: '',
       category: '',
     });
+    localStorage.removeItem('formData');
     onClear?.();
   };
 

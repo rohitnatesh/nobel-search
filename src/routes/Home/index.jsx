@@ -15,7 +15,7 @@ const getSearchApi = ({ nation, year, category }) => {
   if (category) {
     api += `/category/${category}`;
   }
-  
+
   if (nation) {
     api += `/nation/${nation}`;
   }
@@ -66,7 +66,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <Typography variant="h1" fontSize={60} align="center" mt="30px" mb="50px">
+      <Typography variant="h1" fontSize={60} align="center" mt="40px" mb="50px">
         Nobel Prize Winners
       </Typography>
 
