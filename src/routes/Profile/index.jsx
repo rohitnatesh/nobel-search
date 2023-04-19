@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   Link,
-  Paper,
   Table,
   TableBody,
   TableCell,

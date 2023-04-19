@@ -280,7 +280,7 @@ WHERE {{
         return jsonify(processed_results)
 
 class NobelByPerson(Resource):
-    def get(self, person_name, year):
+    def get(self, person_name):
         query_person_details = f"""
 PREFIX nob: <http://swat.cse.lehigh.edu/resources/onto/nobel.owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -295,16 +295,14 @@ WHERE {{
   ?winner nob:nationality ?nation .
   ?winner nob:photo ?photo .
   ?winner nob:birthYear ?birthYear .
-  ?winner nob:deathYear ?deathYear .
+  OPTIONAL {{ ?winner nob:deathYear ?deathYear . }}
   ?prize rdf:type ?prizeClass .
   ?prizeClass rdfs:subClassOf nob:Prize .
-  ?prize nob:yearWon ?year .
-  ?prize nob:motivation ?motivation .
-  ?winner nob:Association ?association .
-  
-  FILTER (xsd:integer(?year) = {year}) .
+  OPTIONAL {{ ?prize nob:yearWon ?year . }}
+  OPTIONAL {{ ?prize nob:motivation ?motivation . }}
+  OPTIONAL {{ ?winner nob:Association ?association . }} 
   BIND (STR(?prizeClass) AS ?prizeType) .
-  FILTER (CONTAINS(?winnerName, "{person_name}")) .
+  FILTER (CONTAINS(REPLACE(STR(?winnerName), "^\\\\s+|\\\\s+$", ""), "{person_name}")) .
 }}
 """
         results_person_details = run_sparql_query(query_person_details)
@@ -324,7 +322,7 @@ api.add_resource(NobelByYearAndCategory, '/nobel/year/<string:year>/category/<st
 api.add_resource(NobelByYearAndCategoryAndNation, '/nobel/year/<string:year>/category/<string:category>/nation/<string:nation>')
 api.add_resource(NobelByYearAndNation, '/nobel/year/<string:year>/nation/<string:nation>')
 api.add_resource(NobelByCategoryAndNation, '/nobel/category/<string:category>/nation/<string:nation>')
-api.add_resource(NobelByPerson, '/nobel/person/<string:person_name>/year/<string:year>')
+api.add_resource(NobelByPerson, '/nobel/person/<string:person_name>')
 
 if __name__ == "__main__":
     app.run(debug=True)
